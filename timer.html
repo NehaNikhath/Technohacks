@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .timer {
+            font-size: 36px;
+            text-align: center;
+            margin: 20px;
+        }
+        button {
+            font-size: 18px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer" id="timer">00:00:00</div>
+    <button onclick="startTimer()">      Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+    <button onclick="restartTimer()">Restart</button>
+
+    <script>
+        let interval;
+        let time = 0;
+
+        function startTimer() {
+            if (!interval) {
+                interval = setInterval(updateTimer, 1000);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(interval);
+            interval = null;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            time = 0;
+            updateDisplay();
+        }
+
+        function restartTimer() {
+            resetTimer();
+            startTimer();
+        }
+
+        function updateTimer() {
+            time++;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = time % 60;
+
+            const formattedTime = 
+                padZero(hours) + ":" + 
+                padZero(minutes) + ":" + 
+                padZero(seconds);
+
+            document.getElementById("timer").textContent = formattedTime;
+        }
+
+        function padZero(number) {
+            return number.toString().padStart(2, '0');
+        }
+    </script>
+</body>
+</html>
